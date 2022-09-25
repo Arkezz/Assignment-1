@@ -184,7 +184,7 @@ public:
 				++countA;
 			}
 			else {
-				cout << Car_Type << " is not allowed only Private and Motorcycle vechiles can be on road A" << endl;
+				cout << Car_Type << " is not allowed only Private and Motorcycle vechiles can be on this road." << endl;
 			}
 		}
 		else if (Road_Type == 'B') {
@@ -197,7 +197,7 @@ public:
 				++countC;
 			}
 			else {
-				cout << Car_Type << " is not allowed only Truck vechiles can be on road C" << endl;
+				cout << Car_Type << " is not allowed only Truck vechiles can be on this road." << endl;
 			}
 		}
 	}
@@ -271,7 +271,6 @@ void generateCars(Car cars[], int size) {
 
 //function that prints the car information and that its getting fined
 void printCar(Car car, Road road) {
-	cout << "------------------------------------------------------------" << endl;
 	cout << "Road " << road.getRoad_Type() << endl;
 	cout << "Car Brand: " << car.getCar_Brand() << endl;
 	cout << "Car Type: " << car.getCar_Type() << endl;
@@ -279,7 +278,7 @@ void printCar(Car car, Road road) {
 	cout << "Car Speed: " << car.getSpeed() << endl;
 	cout << "Car Year Model: " << car.getYear_Model() << endl;
 	cout << "Car Age: " << road.age(car.getYear_Model()) << endl;
-	cout << "Car is getting fined for going past the speed limit: " << road.getSpeed_Limit() << endl;
+	cout << "Car would get fined for going past the speed limit: " << road.getSpeed_Limit() << endl;
 }
 
 int main() {
@@ -294,7 +293,7 @@ int main() {
 	queue<Car> car_queue;
 	Car carArray[10];
 	//Generate 10 cars and add them to the queue
-	generateCars(carArray, 10);
+	generateCars(carArray, 5);
 	for (int i = 0; i < 10; i++) {
 		car_queue.push(carArray[i]);
 	}
@@ -302,20 +301,46 @@ int main() {
 	//Loop the queue
 	for (int i = 0; i < car_queue.size(); i++) {
 		{
-			road1.Allow(car_queue.front().getCar_Type());
-			road2.Allow(car_queue.front().getCar_Type());
-			road3.Allow(car_queue.front().getCar_Type());
+			//Using the allow function inside makes the console output messy
 			if (road1.Radar(car_queue.front().getSpeed())) {
 				// print that these cars are getting fined for going past road speed limit
+				cout << "Car " << i + 1 << ":" << endl;
 				printCar(car_queue.front(), road1);
+				road1.Allow(car_queue.front().getCar_Type());
+				cout << "------------------------------------------------------------" << endl;
+			}
+			else {
+				cout << "Car " << i + 1 << ":" << endl;
+				//print the road
+				cout << "Road " << road1.getRoad_Type() << endl;
+				road1.Allow(car_queue.front().getCar_Type());
+				cout << "------------------------------------------------------------" << endl;
 			}
 			road1.age(car_queue.front().getYear_Model());
 			if (road2.Radar(car_queue.front().getSpeed())) {
+				cout << "Car " << i + 1 << ":" << endl;
 				printCar(car_queue.front(), road2);
+				road2.Allow(car_queue.front().getCar_Type());
+				cout << "------------------------------------------------------------" << endl;
+			}
+			else {
+				cout << "Car " << i + 1 << ":" << endl;
+				cout << "Road " << road2.getRoad_Type() << endl;
+				road2.Allow(car_queue.front().getCar_Type());
+				cout << "------------------------------------------------------------" << endl;
 			}
 			road2.age(car_queue.front().getYear_Model());
 			if (road3.Radar(car_queue.front().getSpeed())) {
+				cout << "Car " << i + 1 << ":" << endl;
 				printCar(car_queue.front(), road3);
+				road3.Allow(car_queue.front().getCar_Type());
+				cout << "------------------------------------------------------------" << endl;
+			}
+			else {
+				cout << "Car " << i + 1 << ":" << endl;
+				cout << "Road " << road3.getRoad_Type() << endl;
+				road3.Allow(car_queue.front().getCar_Type());
+				cout << "------------------------------------------------------------" << endl;
 			}
 			road3.age(car_queue.front().getYear_Model());
 			car_queue.pop();
